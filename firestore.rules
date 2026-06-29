@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global safety net - Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Match users root and its nested subcollections
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      match /tasks/{taskId} {
+        allow read, write: if isOwner(userId) && isValidId(taskId);
+      }
+
+      match /schedule/{blockId} {
+        allow read, write: if isOwner(userId) && isValidId(blockId);
+      }
+
+      match /insights/{insightId} {
+        allow read, write: if isOwner(userId) && isValidId(insightId);
+      }
+
+      match /coach/{docId} {
+        allow read, write: if isOwner(userId) && isValidId(docId);
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "An active objective or operation in LifeOS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "deadline": { "type": "string" },
+        "priority": { "type": "string" },
+        "estimatedEffort": { "type": "number" },
+        "completed": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "completedAt": { "type": "string" },
+        "riskLevel": { "type": "string" },
+        "riskReason": { "type": "string" },
+        "subtasks": { "type": "array" },
+        "recoveryPlan": { "type": "object" }
+      },
+      "required": ["id", "title", "deadline", "priority", "estimatedEffort", "completed", "createdAt"]
+    },
+    "WeeklyTimeBlock": {
+      "title": "WeeklyTimeBlock",
+      "description": "A scheduled focus block in the weekly planner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "day": { "type": "string" },
+        "time": { "type": "string" },
+        "taskId": { "type": "string" },
+        "taskTitle": { "type": "string" },
+        "activity": { "type": "string" }
+      },
+      "required": ["id", "day", "time", "taskId", "taskTitle", "activity"]
+    },
+    "AIInsight": {
+      "title": "AIInsight",
+      "description": "An automated productivity insight from LifeOS agent",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "text": { "type": "string" },
+        "taskId": { "type": "string" }
+      },
+      "required": ["id", "type", "title", "text"]
+    },
+    "ProductivitySummary": {
+      "title": "ProductivitySummary",
+      "description": "Productivity scores, feedback advice, strengths, and optimal times",
+      "type": "object",
+      "properties": {
+        "productivityScore": { "type": "number" },
+        "completionRate": { "type": "number" },
+        "advice": { "type": "string" },
+        "strengths": { "type": "array" },
+        "improvementAreas": { "type": "array" },
+        "optimalWorkTime": { "type": "string" }
+      },
+      "required": ["productivityScore", "completionRate", "advice", "strengths", "improvementAreas"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User-specific operations and tasks"
+    },
+    "/users/{userId}/schedule/{blockId}": {
+      "schema": "WeeklyTimeBlock",
+      "description": "User-specific scheduled focus blocks"
+    },
+    "/users/{userId}/insights/{insightId}": {
+      "schema": "AIInsight",
+      "description": "User-specific actionable AI insights"
+    },
+    "/users/{userId}/coach/summary": {
+      "schema": "ProductivitySummary",
+      "description": "User-specific productivity coaching feedback"
+    }
+  }
+}

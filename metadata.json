@@ -1,0 +1,6 @@
+{
+  "name": "LifeOS AI – Personal Operations System",
+  "description": "An AI-powered personal operations system and Chief of Staff that acts as an agentic companion to break down tasks, plan schedules, predict deadline risks, and design recovery guides.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
